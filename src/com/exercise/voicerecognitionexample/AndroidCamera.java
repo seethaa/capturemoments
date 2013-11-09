@@ -1,8 +1,10 @@
-package com.exercise.AndroidCamera;
+package com.exercise.voicerecognitionexample;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import com.exercise.voicerecognitionexample.R;
 
 import android.app.Activity;
 import android.content.ContentValues;
