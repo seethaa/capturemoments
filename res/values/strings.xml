@@ -7,6 +7,12 @@
     <string name="tvTextMatches">Text Matches</string>
     <string name="sNoOfMatches">No of Matches</string>
     <string name="etSearchHint">Speech hint here</string>
+    <string name="connexion">Connection :</string>
+    <string name="connect">Connection to my Arduino</string>
+    <string name="activeLed">Switch LED on/off :</string>
+    <string name="space">".."</string>
+    
+    
     <string-array name="saNoOfMatches">
         <item>1</item>
         <item>2</item>
