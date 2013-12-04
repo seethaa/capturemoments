@@ -1,5 +1,6 @@
 package com.exercise.voicerecognitionexample;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +23,7 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
@@ -210,9 +212,13 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 			 * arg0.length);
 			 */
 
-			Uri uriTarget = getContentResolver().insert(
-					Media.EXTERNAL_CONTENT_URI, new ContentValues());
+//			Uri uriTarget = getContentResolver().insert(
+//					Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
+			String storeLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Flash/raw/";
+			String picname = "pic_" + String.valueOf( System.currentTimeMillis() ) + ".jpg" ;
+			Uri uriTarget = Uri.fromFile( new File( storeLocation, picname) );
+			
 			OutputStream imageFileOS;
 			try {
 				imageFileOS = getContentResolver().openOutputStream(uriTarget);

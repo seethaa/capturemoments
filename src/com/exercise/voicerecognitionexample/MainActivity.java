@@ -186,7 +186,7 @@ public class MainActivity extends Activity {
 							maxLap = pixels[i];
 					}
 		
-					int soglia = -93492394; //-8900000;// -6118750;
+					int soglia = -8000000;// -6118750; -93492394; //
 		
 					// blurred: -12500671
 					// nonblurred: -8487298
