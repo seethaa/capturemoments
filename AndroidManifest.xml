@@ -21,6 +21,10 @@
             android:name=".VoiceRecognitionActivity"
             android:label="@string/title_activity_voice_recognition" >
         </activity>
+           <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_voice_recognition" >
+        </activity>
         <activity
             android:name=".Main"
             android:label="@string/title_activity_voice_recognition" >

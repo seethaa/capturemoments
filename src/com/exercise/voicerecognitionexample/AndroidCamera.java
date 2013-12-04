@@ -102,7 +102,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		this.addContentView(viewControl, layoutParamsControl);
 
-		buttonTakePicture = (Button) findViewById(R.id.takepicture);
+		buttonTakePicture = (Button) findViewById(R.id.viewPicsButton);
 		buttonTakePicture.setOnClickListener(new Button.OnClickListener() {
 
 			@Override
@@ -110,7 +110,10 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 				// TODO Auto-generated method stub
 				// camera.takePicture(myShutterCallback,
 				// myPictureCallback_RAW, myPictureCallback_JPG);
-
+		
+				Toast.makeText(getApplicationContext(), "Flash!",
+						Toast.LENGTH_SHORT).show();
+				
 				System.out.println("taking picture..");
 			}
 		});
@@ -151,7 +154,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 //				returnIntent.putExtra("result", "pause");
 //				setResult(RESULT_OK, returnIntent);
 //				finish();
-
+ 
 				camera.takePicture(myShutterCallback, myPictureCallback_RAW,
 						myPictureCallback_JPG);
 				PictureCallback rawCallback = new PictureCallback() {
