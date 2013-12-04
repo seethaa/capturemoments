@@ -76,6 +76,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		
 		CheckBt();
 
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -88,7 +89,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		toggleServo("continue");
 		
 //		sc = new ServoControl();
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		getWindow().setFormat(PixelFormat.UNKNOWN);
 		surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
@@ -103,7 +104,8 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		this.addContentView(viewControl, layoutParamsControl);
 
 		buttonTakePicture = (Button) findViewById(R.id.viewPicsButton);
-		buttonTakePicture.setOnClickListener(new Button.OnClickListener() {
+
+		buttonTakePicture.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -115,6 +117,9 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 						Toast.LENGTH_SHORT).show();
 				
 				System.out.println("taking picture..");
+				
+				Intent intent = new Intent(AndroidCamera.this, MainActivity.class);
+		        startActivity(intent);
 			}
 		});
 
@@ -125,7 +130,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-				buttonTakePicture.setEnabled(false);
+//				buttonTakePicture.setEnabled(false);
 				camera.autoFocus(myAutoFocusCallback);
 			}
 		});
@@ -273,6 +278,12 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		previewing = false;
 	}
 
+	public void onPicView(final View view){
+		Toast.makeText(getApplicationContext(), "Flash!",
+				Toast.LENGTH_SHORT).show();
+		
+		System.out.println("taking picture..");
+	}
 	public void toggleServo(String data) {
 		if (btSocket.isConnected()) {
 
