@@ -1,3 +1,6 @@
+/**
+ * Activity implementing android camera for the flash dock app
+ */
 package com.exercise.voicerecognitionexample;
 
 import java.io.File;
@@ -44,21 +47,13 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 	SurfaceHolder surfaceHolder;
 	boolean previewing = false;
 	LayoutInflater controlInflater = null;
-
 	Button buttonTakePicture;
 	TextView prompt;
-
-//	ServoControl sc;
-
 	private static final String TAG = "CM";
-
 	final int RESULT_SAVEIMAGE = 0;
-
 	private String dataToSend;
-
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothSocket btSocket = null;
-
 	private OutputStream outStream = null;
 	private static String address = "00:06:66:03:AA:46";
 	private static final UUID MY_UUID = UUID
@@ -78,7 +73,6 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		
 		CheckBt();
 
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
@@ -87,10 +81,10 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		// pair the bluetooth
 		connect();
 
-		//start moving
+		// start moving
 		toggleServo("continue");
-		
-//		sc = new ServoControl();
+
+		// sc = new ServoControl();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		getWindow().setFormat(PixelFormat.UNKNOWN);
@@ -114,14 +108,15 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 				// TODO Auto-generated method stub
 				// camera.takePicture(myShutterCallback,
 				// myPictureCallback_RAW, myPictureCallback_JPG);
-		
+
 				Toast.makeText(getApplicationContext(), "Flash!",
 						Toast.LENGTH_SHORT).show();
-				
+
 				System.out.println("taking picture..");
-				
-				Intent intent = new Intent(AndroidCamera.this, MainActivity.class);
-		        startActivity(intent);
+
+				Intent intent = new Intent(AndroidCamera.this,
+						MainActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -132,7 +127,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 
-//				buttonTakePicture.setEnabled(false);
+				// buttonTakePicture.setEnabled(false);
 				camera.autoFocus(myAutoFocusCallback);
 			}
 		});
@@ -157,11 +152,11 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 
 				toggleServo("pause");
 
-//				Intent returnIntent = new Intent();
-//				returnIntent.putExtra("result", "pause");
-//				setResult(RESULT_OK, returnIntent);
-//				finish();
- 
+				// Intent returnIntent = new Intent();
+				// returnIntent.putExtra("result", "pause");
+				// setResult(RESULT_OK, returnIntent);
+				// finish();
+
 				camera.takePicture(myShutterCallback, myPictureCallback_RAW,
 						myPictureCallback_JPG);
 				PictureCallback rawCallback = new PictureCallback() {
@@ -212,13 +207,15 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 			 * arg0.length);
 			 */
 
-//			Uri uriTarget = getContentResolver().insert(
-//					Media.EXTERNAL_CONTENT_URI, new ContentValues());
+			// Uri uriTarget = getContentResolver().insert(
+			// Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
-			String storeLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Flash/raw/";
-			String picname = "pic_" + String.valueOf( System.currentTimeMillis() ) + ".jpg" ;
-			Uri uriTarget = Uri.fromFile( new File( storeLocation, picname) );
-			
+			String storeLocation = Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/Flash/raw/";
+			String picname = "pic_"
+					+ String.valueOf(System.currentTimeMillis()) + ".jpg";
+			Uri uriTarget = Uri.fromFile(new File(storeLocation, picname));
+
 			OutputStream imageFileOS;
 			try {
 				imageFileOS = getContentResolver().openOutputStream(uriTarget);
@@ -269,14 +266,12 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
 		camera = Camera.open();
 		camera.setFaceDetectionListener(faceDetectionListener);
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
 		camera.stopFaceDetection();
 		camera.stopPreview();
 		camera.release();
@@ -284,12 +279,18 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		previewing = false;
 	}
 
-	public void onPicView(final View view){
-		Toast.makeText(getApplicationContext(), "Flash!",
-				Toast.LENGTH_SHORT).show();
-		
+	public void onPicView(final View view) {
+		Toast.makeText(getApplicationContext(), "Flash!", Toast.LENGTH_SHORT)
+				.show();
+
 		System.out.println("taking picture..");
 	}
+
+	/**
+	 * Start or stop the servo motor. Send signal to bluetooth
+	 * 
+	 * @param data
+	 */
 	public void toggleServo(String data) {
 		if (btSocket.isConnected()) {
 
@@ -300,17 +301,12 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 				dataToSend = "1";
 				writeData(dataToSend);
 			}
-			// if (OnOff.isChecked()) {
-			// dataToSend = "0";
-			// writeData(dataToSend);
-			// } else if (!OnOff.isChecked()) {
-			// dataToSend = "1";
-			// writeData(dataToSend);
-			// }
 		}
-
 	}
 
+	/**
+	 * Disconnect the bluetooh from arduino
+	 */
 	private void disconnect() {
 		try {
 			if (btSocket != null)
@@ -331,6 +327,9 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 
 	}
 
+	/**
+	 * Connect the android app to arduino bluetooth
+	 */
 	public void connect() {
 
 		Log.d(TAG, address);
@@ -367,6 +366,11 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 
 	}
 
+	/**
+	 * Send data to the arduino over bluetooth
+	 * 
+	 * @param data
+	 */
 	private void writeData(String data) {
 		try {
 			outStream = btSocket.getOutputStream();
@@ -384,6 +388,10 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		}
 	}
 
+	/**
+	 * Check the state of bluetooth connection.
+	 * 
+	 */
 	private void CheckBt() {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -401,6 +409,9 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback {
 		}
 	}
 
+	/**
+	 * Function to begin listening to data
+	 */
 	public void beginListenForData() {
 		try {
 			inStream = btSocket.getInputStream();

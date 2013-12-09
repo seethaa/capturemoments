@@ -1,3 +1,7 @@
+/**
+ * File to handle voice recognition
+ */
+
 package com.exercise.voicerecognitionexample;
 
 import java.util.ArrayList;
@@ -38,9 +42,12 @@ public class VoiceRecognitionActivity extends Activity {
 		msTextMatches = (Spinner) findViewById(R.id.sNoOfMatches);
 		mbtSpeak = (Button) findViewById(R.id.btSpeak);
 	}
-
+	
+	/**
+	 * Function to Check if voice recognition is present
+	 */
 	public void checkVoiceRecognition() {
-		// Check if voice recognition is present
+		// 
 		PackageManager pm = getPackageManager();
 		List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(
 				RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
